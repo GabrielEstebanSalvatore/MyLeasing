@@ -20,7 +20,7 @@ namespace MyLeasing.Web
             using (var scope = scopeFactory.CreateScope())
             {
                 var seeder = scope.ServiceProvider.GetService<SeedDb>();
-                seeder.SeedAsync().Wait();
+                //seeder.SeedAsync().Wait();
             }
         }
 
@@ -30,4 +30,3 @@ namespace MyLeasing.Web
         }
     }
 }
-

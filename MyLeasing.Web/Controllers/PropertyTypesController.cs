@@ -26,7 +26,7 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: PropertyTypes/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
@@ -49,9 +49,6 @@ namespace MyLeasing.Web.Controllers
             return View();
         }
 
-        // POST: PropertyTypes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] PropertyType propertyType)
@@ -66,7 +63,7 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: PropertyTypes/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
@@ -81,12 +78,10 @@ namespace MyLeasing.Web.Controllers
             return View(propertyType);
         }
 
-        // POST: PropertyTypes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+   
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name")] PropertyType propertyType)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] PropertyType propertyType)
         {
             if (id != propertyType.Id)
             {
@@ -117,7 +112,7 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: PropertyTypes/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
@@ -137,7 +132,7 @@ namespace MyLeasing.Web.Controllers
         // POST: PropertyTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var propertyType = await _context.PropertyTypes.FindAsync(id);
             _context.PropertyTypes.Remove(propertyType);
@@ -145,7 +140,7 @@ namespace MyLeasing.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PropertyTypeExists(string id)
+        private bool PropertyTypeExists(int id)
         {
             return _context.PropertyTypes.Any(e => e.Id == id);
         }

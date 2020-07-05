@@ -1,9 +1,9 @@
 ﻿
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using MyLeasing.Web.Data;
 using MyLeasing.Web.Data.Entities;
 using MyLeasing.Web.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 namespace MyLeasing.Web.Helpers
 {
     public class ConverterHelper : IConverterHelper
@@ -17,6 +17,22 @@ namespace MyLeasing.Web.Helpers
         {
             _dataContext = dataContext;
             _combosHelper = combosHelper;
+        }
+
+        public async Task<Contract> ToContractAsync(ContractViewModel model, bool isNew)
+        {
+            return new Contract
+            {
+                EndDate = model.EndDate.ToUniversalTime(),
+                IsActive = model.IsActive,
+                Lessee = await _dataContext.Lessees.FindAsync(model.LesseeId),
+                Id = isNew ? 0 : model.Id,
+                Owner = await _dataContext.Owners.FindAsync(model.OwnerId),
+                Price = model.Price,
+                Property = await _dataContext.Properties.FindAsync(model.PropertyId),
+                Remarks = model.Remarks,
+                StartDate = model.StartDate.ToUniversalTime(),
+            };
         }
 
         public async Task<Property> ToPropertyAsync(PropertyViewModel model, bool isNew)
@@ -37,7 +53,7 @@ namespace MyLeasing.Web.Helpers
                 Rooms = model.Rooms,
                 SquareMeters = model.SquareMeters,
                 Stratum = model.Stratum,
-    
+
             };
         }
 

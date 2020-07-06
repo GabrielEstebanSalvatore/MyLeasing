@@ -232,6 +232,7 @@ namespace MyLeasing.Web.Controllers
                 PropertyTypes = _combosHelper.GetComboPropertyTypes()
             };
 
+            model.PropertyTypes = _combosHelper.GetComboPropertyTypes();
             return View(model);
         }
 
@@ -400,6 +401,7 @@ namespace MyLeasing.Web.Controllers
                 return RedirectToAction($"{nameof(DetailsProperty)}/{model.PropertyId }");
             }
 
+            model.Lessees = _combosHelper.GetComboLessees();
             return View(model);
         }
 

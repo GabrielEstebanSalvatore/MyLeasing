@@ -26,7 +26,7 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: PropertyTypes/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -63,7 +63,7 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: PropertyTypes/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -112,7 +112,7 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: PropertyTypes/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -120,21 +120,17 @@ namespace MyLeasing.Web.Controllers
             }
 
             var propertyType = await _context.PropertyTypes
+                .Include(pt => pt.Properties)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (propertyType == null)
             {
                 return NotFound();
             }
-
-            return View(propertyType);
-        }
-
-        // POST: PropertyTypes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var propertyType = await _context.PropertyTypes.FindAsync(id);
+            if (propertyType.Properties.Count > 0)
+            {
+                //TODO: message
+                return RedirectToAction(nameof(Index));
+            }
             _context.PropertyTypes.Remove(propertyType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

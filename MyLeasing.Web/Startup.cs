@@ -33,6 +33,12 @@ namespace MyLeasing.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+            });
+
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -87,6 +93,7 @@ namespace MyLeasing.Web
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCookiePolicy();
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
 
             app.UseMvc(routes =>
             {

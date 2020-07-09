@@ -47,7 +47,13 @@ namespace MyLeasing.Web
                 cfg.Password.RequireLowercase = false;
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<DataContext>();
+
+                cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                cfg.SignIn.RequireConfirmedEmail = true;
+
+            })
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<DataContext>();
 
 
             services.AddDbContext<DataContext>(cfg =>
@@ -75,6 +81,7 @@ namespace MyLeasing.Web
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
                 };
             });
+            services.AddScoped<IMailHelper, MailHelper>();//ENVIO EMAIL
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

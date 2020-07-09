@@ -26,8 +26,10 @@ namespace MyLeasing.Web.Helpers
         Task<IdentityResult> UpdateUserAsync(User user);
 
         Task<SignInResult> ValidatePasswordAsync(User user, string password);
+
         Task<User> AddUser(AddUserViewModel view, string role);
 
+        Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
 
     }
 }

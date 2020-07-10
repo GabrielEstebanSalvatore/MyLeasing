@@ -38,6 +38,11 @@ namespace MyLeasing.Web.Helpers
 
         Task<User> GetUserByIdAsync(string userId);
 
+        //RESET PASSWORD
+        Task<string> GeneratePasswordResetTokenAsync(User user);
+
+        Task<IdentityResult> ResetPasswordAsync(User user, string token, string password);
+
 
     }
 }
